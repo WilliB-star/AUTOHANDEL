@@ -151,6 +151,24 @@ app.get('/api/vehicles/:id', async (req, res) => {
     }
 });
 
+// Admin Login
+app.post('/api/admin/login', (req, res) => {
+    const { username, password } = req.body;
+
+    // Debugging: Logge die empfangenen Daten
+    console.log('Empfangene Daten:', username, password);
+
+    const adminUsername = 'root';
+    const adminPassword = '123456';
+
+    if (username === adminUsername && password === adminPassword) {
+        const token = 'secure-admin-token';
+        res.status(200).json({ token });
+    } else {
+        res.status(401).json({ error: 'Ungültige Zugangsdaten' });
+    }
+});
+
 // Fahrzeug erstellen
 app.post('/api/vehicles', upload.array('images', 10), async (req, res) => {
     const connection = await pool.getConnection();
